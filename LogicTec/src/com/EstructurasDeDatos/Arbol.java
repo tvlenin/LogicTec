@@ -1,17 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.EstructurasDeDatos;
 
-/**
- *
- * @author Abrahamon
- */
 public class Arbol<E> {
-    protected Nodo<E> _root;
     
+    protected Rama_Hoja _root;
+    protected int _profundidad;
     
+    public Arbol(){
+        this._profundidad = 0;
+        this._root = null;
+    }
+    
+    public void insertar(Rama_Hoja){
+        
+    }
 }

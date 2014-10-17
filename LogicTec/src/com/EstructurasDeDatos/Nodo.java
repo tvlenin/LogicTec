@@ -1,9 +1,10 @@
 package com.EstructurasDeDatos;
 
+
 public class Nodo<E>{ //<E extends Comparable> implements Comparable<Nodo<E>>
-    protected E dato;
-    protected Nodo<E> siguiente;
-    protected Nodo<E> previo;
+    public E dato;
+    public Nodo<E> siguiente;
+    public Nodo<E> previo;
     
     
     public Nodo(E dato){
@@ -22,6 +23,7 @@ public class Nodo<E>{ //<E extends Comparable> implements Comparable<Nodo<E>>
     public void setSiguiente(Nodo<E> pNodo){
         this.siguiente = pNodo;
     }
+    
     public E getDato(){
         return dato;
     }
@@ -53,4 +55,5 @@ public class Nodo<E>{ //<E extends Comparable> implements Comparable<Nodo<E>>
     }
     
 }
+
 
