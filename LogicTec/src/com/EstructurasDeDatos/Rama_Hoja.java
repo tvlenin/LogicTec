@@ -1,18 +1,15 @@
 package com.EstructurasDeDatos;
 
-import Compuertas.And;
-import Compuertas.Compuerta;
-
 public class Rama_Hoja{
     
     protected String _nombre;
     protected boolean _ValorOutPut;
     protected Lista<Rama_Hoja> _listaInPuts;
     protected Lista<Rama_Hoja> _listaOutPuts;
-    protected Compuerta logicaCompuerta;
+    protected String logicaCompuerta;
     
     
-    public Rama_Hoja(Compuerta pCompuerta,String pNombre){
+    public Rama_Hoja(String pCompuerta,String pNombre){
         this._nombre = pNombre;
         this.logicaCompuerta = pCompuerta;
         this._listaInPuts = new Lista<>();

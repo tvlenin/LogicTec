@@ -1,6 +1,5 @@
 package com.EstructurasDeDatos;
 
-import Compuertas.Compuerta;
 
 public class Arbol<E> {
     
@@ -16,9 +15,8 @@ public class Arbol<E> {
     public void insertar_A_ArribaDe_B(Rama_Hoja pRamaA,Rama_Hoja pRamaB){
         if(_profundidad == -1 && pRamaB == null)//se asume que si pCompuerta es nulo, el arbol esta vacio
             this.insertarPrimerElemento(pRamaA);
-        
         else if(pRamaB == null)
-            System.out.println("El arbol no esta vacio, se trato de insertar un nodo como raiz");
+            System.out.println("Error. El arbol no esta vacio, se trato de insertar un nodo como raiz");
         else{
             pRamaA.setNewInput(pRamaB);
             pRamaB.setNewOutPut(pRamaA);
