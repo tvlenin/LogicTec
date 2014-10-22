@@ -2,11 +2,11 @@ package com.EstructurasDeDatos;
 
 public class Rama_Hoja{
     
-    protected String _nombre;
-    protected boolean _ValorOutPut;
+    protected String _nombre; //identificador unico para cada compuerta, creado por la GUI
+    protected boolean _ValorOutPut; //resultado de todas las entradas
     protected Lista<Rama_Hoja> _listaInPuts;
     protected Lista<Rama_Hoja> _listaOutPuts;
-    protected String logicaCompuerta;
+    protected String logicaCompuerta; //and, or, nor, not, etc
     
     
     public Rama_Hoja(String pCompuerta,String pNombre){
@@ -31,7 +31,7 @@ public class Rama_Hoja{
         }
     }
     
-    public String getName(){
+    public String getIdentificador(){
         return _nombre;
     }
     
@@ -40,7 +40,7 @@ public class Rama_Hoja{
             System.out.println("No tiene Outputs");
         else
             for(Nodo<Rama_Hoja> iterador = _listaOutPuts.getHead(); iterador != null; iterador = iterador.getSiguiente())
-                System.out.println(iterador.getDato().getName());
+                System.out.println(iterador.getDato().getIdentificador());
     }
     
     public void printInPuts(){// Imprimir todos los nombres de los Inputs
@@ -48,7 +48,7 @@ public class Rama_Hoja{
             System.out.println("No tiene Inputs");
         else
             for(Nodo<Rama_Hoja> iterador = _listaInPuts.getHead(); iterador != null; iterador = iterador.getSiguiente())
-                System.out.println(iterador.getDato().getName());
+                System.out.println(iterador.getDato().getIdentificador());
     }
 }
 

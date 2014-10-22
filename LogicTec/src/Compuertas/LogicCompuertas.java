@@ -33,7 +33,8 @@ public class LogicCompuertas {
                 if (A != B)
                     resp = true;
                 break;
-            default: 
+            default:
+                System.out.println("I/O no tienen logica de compuertas.");
                 break;
         }
         
