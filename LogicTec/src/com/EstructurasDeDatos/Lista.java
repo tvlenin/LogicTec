@@ -250,6 +250,12 @@ public class Lista<E> {
         }
         return resp;
     }
+    
+    public void concatenar(Lista<E> pLista){
+        cola.siguiente = pLista.getHead();
+        pLista.getHead().previo = cola;
+        cola = pLista.getTail();
+    }
 }
       
     

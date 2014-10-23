@@ -1,17 +1,19 @@
 package com.EstructurasDeDatos;
 
+import Compuertas.LogicCompuertas;
+
 public class Rama_Hoja{
     
     protected String _nombre; //identificador unico para cada compuerta, creado por la GUI
     protected boolean _ValorOutPut; //resultado de todas las entradas
     protected Lista<Rama_Hoja> _listaInPuts;
     protected Lista<Rama_Hoja> _listaOutPuts;
-    protected String logicaCompuerta; //and, or, nor, not, etc
+    protected String _logicaCompuerta; //and, or, nor, not, etc
     
     
     public Rama_Hoja(String pCompuerta,String pNombre){
         this._nombre = pNombre;
-        this.logicaCompuerta = pCompuerta;
+        this._logicaCompuerta = pCompuerta;
         this._listaInPuts = new Lista<>();
         this._listaOutPuts = new Lista<>();
         this._ValorOutPut = false;
@@ -26,13 +28,34 @@ public class Rama_Hoja{
     }
     
     public void actualizarData(){
-        for(Nodo<Rama_Hoja> iterador = _listaInPuts.getHead(); iterador != null; iterador = iterador.getSiguiente() ){
-            //hacer la logica de la compuerta para cada dato de input
+        if(_listaInPuts.getTalla() == 1)
+            _ValorOutPut = _listaInPuts.getHead().getDato().getValorOutPut();
+        else{
+            _ValorOutPut = _listaInPuts.getHead().getDato().getValorOutPut();
+            for(Nodo<Rama_Hoja> iterador = _listaInPuts.getHead().getSiguiente(); iterador != null; iterador = iterador.getSiguiente() ){
+                _ValorOutPut = LogicCompuertas.doLogic(_ValorOutPut, iterador.getDato().getValorOutPut(), _logicaCompuerta);
+            }
         }
     }
     
-    public String getIdentificador(){
-        return _nombre;
+    public boolean getValorOutPut(){
+        return this._ValorOutPut;
+    }
+    
+    public String getIdentificador(){//identificador unico asignado en la GUI
+        return this._nombre;
+    }
+    
+    public Lista<Rama_Hoja> getEntradas(){//obtener la lista con todas las entradas que tiene este nodo
+        return _listaInPuts;
+    }
+    
+    public Lista<Rama_Hoja> getSalidas(){
+        return _listaOutPuts;
+    }
+    
+    public String getLogicAccion(){// String en MAYUSCULA que describe la accion logica de esta compuerta
+        return this._logicaCompuerta;
     }
     
     public void printOutPuts(){ //Imprimir el nombre de todos los outpus 
@@ -49,6 +72,12 @@ public class Rama_Hoja{
         else
             for(Nodo<Rama_Hoja> iterador = _listaInPuts.getHead(); iterador != null; iterador = iterador.getSiguiente())
                 System.out.println(iterador.getDato().getIdentificador());
+    }
+    public void setValueOfOutPut(boolean pData){
+        if (_logicaCompuerta == "IN")
+            _ValorOutPut = pData;
+        else
+            System.out.println("Por seguridad solo es permitido cambiar el resultado de logica a las compuertas de InPut");
     }
 }
 

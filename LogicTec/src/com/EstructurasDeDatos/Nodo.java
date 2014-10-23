@@ -6,7 +6,6 @@ public class Nodo<E>{ //<E extends Comparable> implements Comparable<Nodo<E>>
     public Nodo<E> siguiente;
     public Nodo<E> previo;
     
-    
     public Nodo(E dato){
         this(dato,null,null);
     }
