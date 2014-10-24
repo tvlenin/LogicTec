@@ -1,6 +1,6 @@
-package com.EstructurasDeDatos;
+package com.LogicTec.EstructurasDeDatos;
 
-import Compuertas.LogicCompuertas;
+import com.LogicTec.compuertas.LogicCompuertas;
 
 public class Rama_Hoja{
     
@@ -9,14 +9,15 @@ public class Rama_Hoja{
     protected Lista<Rama_Hoja> _listaInPuts;
     protected Lista<Rama_Hoja> _listaOutPuts;
     protected String _logicaCompuerta; //and, or, nor, not, etc
+    protected int _numeroCompuertasEntrada;
     
-    
-    public Rama_Hoja(String pCompuerta,String pNombre){
-        this._nombre = pNombre;
-        this._logicaCompuerta = pCompuerta;
+    public Rama_Hoja(String pLogicaCompuerta,String pID, int pNumeroEntradas){
+        this._nombre = pID;
+        this._logicaCompuerta = pLogicaCompuerta;
         this._listaInPuts = new Lista<>();
         this._listaOutPuts = new Lista<>();
         this._ValorOutPut = false;
+        this._numeroCompuertasEntrada = pNumeroEntradas;
     }
     
     public void setNewInput(Rama_Hoja pRama){
@@ -78,6 +79,15 @@ public class Rama_Hoja{
             _ValorOutPut = pData;
         else
             System.out.println("Por seguridad solo es permitido cambiar el resultado de logica a las compuertas de InPut");
+    }
+    
+    public boolean tieneEspacioParaMasEntradas(){
+        if(_listaInPuts.getTalla() < _numeroCompuertasEntrada)
+            return true;
+        return false;
+    }
+    public int getCantidadEntradas(){
+        return this._numeroCompuertasEntrada;
     }
 }
 

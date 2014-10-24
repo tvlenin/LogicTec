@@ -1,4 +1,4 @@
-package Compuertas;
+package com.LogicTec.compuertas;
 
 public class LogicCompuertas {
 

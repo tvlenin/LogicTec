@@ -1,4 +1,4 @@
-package com.EstructurasDeDatos;
+package com.LogicTec.EstructurasDeDatos;
 
 
 public class Nodo<E>{ //<E extends Comparable> implements Comparable<Nodo<E>>

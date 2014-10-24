@@ -1,4 +1,4 @@
-package com.EstructurasDeDatos;
+package com.LogicTec.EstructurasDeDatos;
 
 public class Lista<E> { 
     
