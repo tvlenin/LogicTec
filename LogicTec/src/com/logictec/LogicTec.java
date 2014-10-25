@@ -30,8 +30,6 @@ public class LogicTec {
         arbol.conectar_A_ArribaDe_B(b, a);
         arbol.conectar_A_ArribaDe_B(c, a);
         
-        System.out.println(a.getSalidas().getHead().getDato().getIdentificador());
-        System.out.println(b.getSalidas().getHead().getDato().getIdentificador());
         
     //    arbol.printlnSalidas();
      //   arbol.conectar_A_ArribaDe_B(d, b);

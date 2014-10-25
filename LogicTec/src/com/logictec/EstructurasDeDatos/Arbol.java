@@ -84,15 +84,11 @@ public class Arbol<E> {
             if(iterador.getDato().getIdentificador() != "IN")
                 return false;
         }
-        return resp;
-    }
-    
-    public Lista<Rama_Hoja> getUltimoNivel(Lista<Rama_Hoja> pRespuesta){
-        
-        for(Nodo<Rama_Hoja> iterador = pRespuesta.getHead(); iterador != null; iterador = iterador.getSiguiente()){
-            
+        for(Nodo<Rama_Hoja> iterador = _entradas.getHead(); iterador != null; iterador = iterador.getSiguiente()){
+            if(iterador.getDato().getIdentificador() != "OUT")
+                return false;
         }
-        return pRespuesta;
+        return resp;
     }
     
     public void revisarConexionLogica(){}
