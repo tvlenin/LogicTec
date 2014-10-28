@@ -5,25 +5,37 @@ public class Arbol<E> {
     
     protected Rama_Hoja _primerElemento;
     protected int _nElementos; 
-    protected Lista<Rama_Hoja> _entradas;
+    protected Lista<Rama_Hoja> _entradasDelArbol;
     protected Lista<Rama_Hoja> _salidasDelArbol; //elementos en la parte mas superior de la estrutura vista como arbol
     
     public Arbol(){
         this._nElementos = -1; //profundidad por defecto de -1
         this._primerElemento = null;
-        this._entradas = new Lista<>();
+        this._entradasDelArbol = new Lista<>();
         this._salidasDelArbol = new Lista<>();
     }
     
-    public void conectar_A_ArribaDe_B(Rama_Hoja pRamaA,Rama_Hoja pRamaB){ //la estructura es semejante a un arbol (se ensancha en la base y disminuye al subir)
+    public void conectar_A_ArribaDe_B(String A ,String B){ //la estructura es semejante a un arbol (se ensancha en la base y disminuye al subir)
         //el pRamaA tiene como entrada la salida de pRamaB.
+        Rama_Hoja pRamaA = this.getObjectoNombre(A);
+        Rama_Hoja pRamaB = this.getObjectoNombre(B);
+        
         if(_nElementos == -1 && pRamaB == null)//se asume que si pCompuerta es nulo, el arbol esta vacio
             this.insertarPrimerElemento(pRamaA);
         else if(pRamaB == null)// este elemento solo es nulo en caso de que el arbol este vacio.
             System.out.println("Error. El arbol no esta vacio, se trato de insertar un nodo como raiz");
         else{
             if(pRamaA.tieneEspacioParaMasEntradas()){
+                    if(_salidasDelArbol.buscar(pRamaB)){
+                        _salidasDelArbol.eliminar(pRamaB);
+                        _salidasDelArbol.insertar(pRamaA);
+                    }
+                    if(_entradasDelArbol.buscar(pRamaA)){
+                        _entradasDelArbol.eliminar(pRamaA);
+                        _entradasDelArbol.insertar(pRamaB);
+                    }
                     this.esUnaNuevaSalida(pRamaA, pRamaB);
+                    this.esUnaNuevaEntrada(pRamaA,pRamaB);
                     pRamaA.setNewInput(pRamaB);
                     pRamaB.setNewOutPut(pRamaA);
                     this._nElementos++;
@@ -34,19 +46,17 @@ public class Arbol<E> {
         }
     }
     
+    private void esUnaNuevaEntrada(Rama_Hoja pRamaA, Rama_Hoja pRamaB) {
+        for(Nodo<Rama_Hoja> iterador = _entradasDelArbol.getHead(); iterador != null; iterador = iterador.getSiguiente())
+            for(Nodo<Rama_Hoja> subiterador = iterador.getDato().getSalidas().getHead(); subiterador != null; subiterador = subiterador.getSiguiente())
+                if(subiterador.getDato() == pRamaA)
+                    _salidasDelArbol.insertar(pRamaB);
+    }
     private void esUnaNuevaSalida(Rama_Hoja pRamaA, Rama_Hoja pRamaB){
-        if(_salidasDelArbol.buscar(pRamaB)){
-            _salidasDelArbol.eliminar(pRamaB);
-            _salidasDelArbol.insertar(pRamaA);
-        }
-        else{
-            for(Nodo<Rama_Hoja> iterador = _salidasDelArbol.getHead(); iterador != null; iterador = iterador.getSiguiente()){
-                for(Nodo<Rama_Hoja> subiterador = iterador.getDato().getEntradas().getHead(); subiterador != null; subiterador = subiterador.getSiguiente()){
-                    if(subiterador.getDato() == pRamaB)
-                        _salidasDelArbol.insertar(pRamaA);
-                }
-            }
-        }
+        for(Nodo<Rama_Hoja> iterador = _salidasDelArbol.getHead(); iterador != null; iterador = iterador.getSiguiente())
+            for(Nodo<Rama_Hoja> subiterador = iterador.getDato().getEntradas().getHead(); subiterador != null; subiterador = subiterador.getSiguiente())
+                if(subiterador.getDato() == pRamaB)
+                    _salidasDelArbol.insertar(pRamaA);
     }
     
     private void insertarPrimerElemento(Rama_Hoja pNewRama){
@@ -77,22 +87,6 @@ public class Arbol<E> {
         return resp;
     }
     
-    public boolean revisarEntradasYSalidas(){//cada nodo debe estar declarado como salida o entrada en los extremos del arbol
-        boolean resp = true;
-        
-        for(Nodo<Rama_Hoja> iterador = _salidasDelArbol.getHead(); iterador != null; iterador = iterador.getSiguiente()){
-            if(iterador.getDato().getIdentificador() != "IN")
-                return false;
-        }
-        for(Nodo<Rama_Hoja> iterador = _entradas.getHead(); iterador != null; iterador = iterador.getSiguiente()){
-            if(iterador.getDato().getIdentificador() != "OUT")
-                return false;
-        }
-        return resp;
-    }
-    
-    public void revisarConexionLogica(){}
-    
     public Rama_Hoja getRoot(){
         return this._primerElemento;
     }
@@ -100,12 +94,40 @@ public class Arbol<E> {
         return this._salidasDelArbol;
     }
     
-    public void eliminar(){}
+    public Lista<Rama_Hoja> getListaEntradas(){
+        return this._entradasDelArbol;
+    }
+    
+    public boolean eliminar(String pId){
+        for(Nodo<Rama_Hoja> iterador = _entradasDelArbol.getHead(); iterador != null; iterador = iterador.getSiguiente())
+            if( iterador.getDato().getIdentificador() == pId)
+                return true;
+        for(Nodo<Rama_Hoja> iterador = _salidasDelArbol.getHead(); iterador != null; iterador = iterador.getSiguiente())
+            if( iterador.getDato().getIdentificador() == pId)
+                return true;
+        return false;
+    }
+    
+    public boolean revisarEntradasYSalidas(){//cada nodo debe estar declarado como salida o entrada en los extremos del arbol
+        boolean resp = true;
+        
+        for(Nodo<Rama_Hoja> iterador = _salidasDelArbol.getHead(); iterador != null; iterador = iterador.getSiguiente()){
+            if(iterador.getDato().getIdentificador() != "IN")
+                return false;
+        }
+        for(Nodo<Rama_Hoja> iterador = _entradasDelArbol.getHead(); iterador != null; iterador = iterador.getSiguiente()){
+            if(iterador.getDato().getIdentificador() != "OUT")
+                return false;
+        }
+        return resp;
+    }
        
     public void printlnSalidas(){
         for(Nodo<Rama_Hoja> iterador = _salidasDelArbol.getHead(); iterador != null; iterador = iterador.getSiguiente()){
             System.out.println(iterador.getDato().getIdentificador());
         }
     }
+
+    
     
 }
