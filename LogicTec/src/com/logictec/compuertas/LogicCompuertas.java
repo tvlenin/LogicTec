@@ -4,8 +4,14 @@ public class LogicCompuertas {
 
     public LogicCompuertas(){}
     
-    public static boolean doLogic(boolean A, boolean B, String plogic){
+    public static int doLogic(int pA, int pB, String plogic){
         boolean resp = false;
+        boolean A= false;
+        boolean B = false;
+        if(pA == 1)
+            A = true;
+        if(pB == 1)
+            B = true;
         switch (plogic){
             case "NOT":
                 resp = !A;
@@ -37,7 +43,9 @@ public class LogicCompuertas {
                 System.out.println("I/O no tienen logica de compuertas.");
                 break;
         }
-        
-        return resp;
+        int res = 0;
+        if (resp)
+            res = 1;
+        return res;
     }
 }

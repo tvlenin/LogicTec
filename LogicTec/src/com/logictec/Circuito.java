@@ -6,7 +6,6 @@ import com.LogicTec.EstructurasDeDatos.Lista;
 import com.LogicTec.EstructurasDeDatos.Nodo;
 import com.LogicTec.EstructurasDeDatos.Rama_Hoja;
 
-
 public class Circuito {
     
     private Lista<Rama_Hoja> _compuertasDesconectadas; 
@@ -17,8 +16,40 @@ public class Circuito {
         this._circuito = new Arbol();   
     }
     
-    public void conectar_A_ArribaDe_B(String A, String B){
+    public void crearNodo(String pID,String logica, Lista<String> pEntradas, Lista<String> pSalidas){
+        Rama_Hoja nuevaRama = new Rama_Hoja(logica, pID, pEntradas, pSalidas);
+        _compuertasDesconectadas.insertar(nuevaRama);
+    }
+    
+    public void conectar_A_ArribaDe_B(String pA, String pB){
+        Rama_Hoja A = _circuito.getObjectoNombre(pA);
+        Rama_Hoja B = _circuito.getObjectoNombre(pB);
+        if( A == null)
+            for(Nodo<Rama_Hoja> iterador = _compuertasDesconectadas.getHead(); iterador != null; iterador = iterador.getSiguiente())
+                if(pA == iterador.getDato().getIdentificador()){
+                    A = iterador.getDato();
+                    break;
+                }
+        if( B == null)
+            for(Nodo<Rama_Hoja> iterador = _compuertasDesconectadas.getHead(); iterador != null; iterador = iterador.getSiguiente())
+                if(pA == iterador.getDato().getIdentificador()){
+                    A = iterador.getDato();
+                    break;
+                }
         _circuito.conectar_A_ArribaDe_B(A, B);
+        
+        System.out.println(_circuito.getListaEntradas().getHead());
+        System.out.println(_circuito.getListaSalidas().getHead());
+    }
+    
+    private Rama_Hoja buscarSacarEntreDesconectado(String pID){
+        Rama_Hoja resp = null;
+        for(Nodo<Rama_Hoja> iteradorTree = _compuertasDesconectadas.getHead(); iteradorTree != null; iteradorTree = iteradorTree.getSiguiente()){
+            if(iteradorTree.getDato().getIdentificador() ==  pID)
+                resp = iteradorTree.getDato();
+                break;
+        }
+        return resp;
     }
     
     public boolean eliminar(String pData){
@@ -29,6 +60,7 @@ public class Circuito {
         return _circuito.revisarEntradasYSalidas();
     }
     
-    
-    public static void main(String[] args) {}
+    public void getTablaVerdad(){
+        
+    }
 }

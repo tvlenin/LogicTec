@@ -5,19 +5,24 @@ import com.LogicTec.compuertas.LogicCompuertas;
 public class Rama_Hoja{
     
     protected String _nombre; //identificador unico para cada compuerta, creado por la GUI
-    protected boolean _ValorOutPut; //resultado de todas las entradas
+    protected int _ValorOutPut; //resultado de todas las entradas
     protected Lista<Rama_Hoja> _listaInPuts;
     protected Lista<Rama_Hoja> _listaOutPuts;
+    protected Lista<String> _IdEntradas;
+    protected Lista<String> _IdSalidas;
     protected String _logicaCompuerta; //and, or, nor, not, etc
-    protected int _numeroCompuertasEntrada;
     
-    public Rama_Hoja(String pLogicaCompuerta,String pID, int pNumeroEntradas){
+    public Rama_Hoja(String pLogicaCompuerta,String pID, Lista<String> pNumeroEntradas , Lista<String> pNumeroSalidas){
         this._nombre = pID;
         this._logicaCompuerta = pLogicaCompuerta;
         this._listaInPuts = new Lista<>();
         this._listaOutPuts = new Lista<>();
-        this._ValorOutPut = false;
-        this._numeroCompuertasEntrada = pNumeroEntradas;
+        this._IdEntradas = pNumeroEntradas;
+        this._IdSalidas = pNumeroSalidas;
+        if(pLogicaCompuerta == "IN")
+            this._ValorOutPut = 0;
+        else
+            this._ValorOutPut = -1;
     }
     
     public void setNewInput(Rama_Hoja pRama){
@@ -29,7 +34,16 @@ public class Rama_Hoja{
     }
     
     public void actualizarData(){
-        if(_listaInPuts.getTalla() == 1)
+        if(_logicaCompuerta == "IN")
+            return;
+        else if (_logicaCompuerta == "NOT"){
+            if(_listaInPuts.getHead().getDato().getValorOutPut() == 0)
+                _ValorOutPut=1;
+            else
+                _ValorOutPut=0;
+            return;
+        }
+        else if(_listaInPuts.getTalla() == 1)//si solo tiene una entrada no realiza accion
             _ValorOutPut = _listaInPuts.getHead().getDato().getValorOutPut();
         else{
             _ValorOutPut = _listaInPuts.getHead().getDato().getValorOutPut();
@@ -39,7 +53,8 @@ public class Rama_Hoja{
         }
     }
     
-    public boolean getValorOutPut(){
+    public int getValorOutPut(){
+        this.actualizarData();
         return this._ValorOutPut;
     }
     
@@ -67,6 +82,27 @@ public class Rama_Hoja{
                 System.out.println(iterador.getDato().getIdentificador());
     }
     
+    public boolean tieneXEntrada(String pData){
+        boolean resp = false;
+        for(Nodo<String> iterador = _IdEntradas.getHead(); iterador != null; iterador = iterador.getSiguiente()){
+            if(iterador.getDato() == pData){
+                resp = true;
+                break;
+            }
+        }
+        return resp;
+    }
+    
+    public boolean tieneXSalida(String pData){
+        boolean resp = false;
+        for(Nodo<String> iterador = _IdSalidas.getHead(); iterador != null; iterador = iterador.getSiguiente()){
+            if(iterador.getDato() == pData){
+                resp = true;
+                break;
+            }
+        }
+        return resp;
+    }
     public void printInPuts(){// Imprimir todos los nombres de los Inputs
         if(_listaInPuts == null)
             System.out.println("No tiene Inputs");
@@ -74,20 +110,13 @@ public class Rama_Hoja{
             for(Nodo<Rama_Hoja> iterador = _listaInPuts.getHead(); iterador != null; iterador = iterador.getSiguiente())
                 System.out.println(iterador.getDato().getIdentificador());
     }
-    public void setValueOfOutPut(boolean pData){
+    
+    public void setValueOfOutPut(int pData){
         if (_logicaCompuerta == "IN")
             _ValorOutPut = pData;
         else
             System.out.println("Por seguridad solo es permitido cambiar el resultado de logica a las compuertas de InPut");
     }
-    
-    public boolean tieneEspacioParaMasEntradas(){
-        if(_listaInPuts.getTalla() < _numeroCompuertasEntrada)
-            return true;
-        return false;
-    }
-    public int getCantidadEntradas(){
-        return this._numeroCompuertasEntrada;
-    }
+ 
 }
 

@@ -1,7 +1,7 @@
 package com.LogicTec.EstructurasDeDatos;
 
 
-public class Arbol<E> {
+public class Arbol<E>{
     
     protected Rama_Hoja _primerElemento;
     protected int _nElementos; 
@@ -15,58 +15,65 @@ public class Arbol<E> {
         this._salidasDelArbol = new Lista<>();
     }
     
-    public void conectar_A_ArribaDe_B(String A ,String B){ //la estructura es semejante a un arbol (se ensancha en la base y disminuye al subir)
+    public void conectar_A_ArribaDe_B(Rama_Hoja pRamaA ,Rama_Hoja pRamaB){ //la estructura es semejante a un arbol (se ensancha en la base y disminuye al subir)
         //el pRamaA tiene como entrada la salida de pRamaB.
-        Rama_Hoja pRamaA = this.getObjectoNombre(A);
-        Rama_Hoja pRamaB = this.getObjectoNombre(B);
-        
         if(_nElementos == -1 && pRamaB == null)//se asume que si pCompuerta es nulo, el arbol esta vacio
-            this.insertarPrimerElemento(pRamaA);
+            this.conectarPrimerElemento(pRamaA);
         else if(pRamaB == null)// este elemento solo es nulo en caso de que el arbol este vacio.
             System.out.println("Error. El arbol no esta vacio, se trato de insertar un nodo como raiz");
         else{
-            if(pRamaA.tieneEspacioParaMasEntradas()){
-                    if(_salidasDelArbol.buscar(pRamaB)){
+            
+                    if(_salidasDelArbol.buscar(pRamaB)){ //
                         _salidasDelArbol.eliminar(pRamaB);
                         _salidasDelArbol.insertar(pRamaA);
+                    }
+                    else{
+                        this.esUnaNuevaSalida(pRamaA, pRamaB);
+                        System.out.println("Probando nueva in con : "+pRamaA.getIdentificador()+"y  "+pRamaB.getIdentificador());
                     }
                     if(_entradasDelArbol.buscar(pRamaA)){
                         _entradasDelArbol.eliminar(pRamaA);
                         _entradasDelArbol.insertar(pRamaB);
                     }
-                    this.esUnaNuevaSalida(pRamaA, pRamaB);
-                    this.esUnaNuevaEntrada(pRamaA,pRamaB);
+                    else
+                        this.esUnaNuevaEntrada(pRamaA,pRamaB);
+                    
                     pRamaA.setNewInput(pRamaB);
                     pRamaB.setNewOutPut(pRamaA);
                     this._nElementos++;
                     //System.out.println("Agregue un elemento nuevo al tree");
-            }
-            else
-                System.out.println("El nodo a conectar no tiene capacidad para mas entradas, su maximo es de :"+pRamaB.getCantidadEntradas());
         }
     }
     
+    public void conectarPrimerElemento(Rama_Hoja pNewRama){
+        this._primerElemento = pNewRama;
+        this._nElementos++;
+        this._salidasDelArbol.insertar(pNewRama);
+        this._entradasDelArbol.insertar(pNewRama);
+        //System.out.println("Extio un elementoh en el arbol");
+    }
+    
     private void esUnaNuevaEntrada(Rama_Hoja pRamaA, Rama_Hoja pRamaB) {
+        System.out.println("testing IN");
         for(Nodo<Rama_Hoja> iterador = _entradasDelArbol.getHead(); iterador != null; iterador = iterador.getSiguiente())
             for(Nodo<Rama_Hoja> subiterador = iterador.getDato().getSalidas().getHead(); subiterador != null; subiterador = subiterador.getSiguiente())
-                if(subiterador.getDato() == pRamaA)
+                if(subiterador.getDato() == pRamaA){
                     _salidasDelArbol.insertar(pRamaB);
+                    //System.out.println("es una nueva IN");
+                }
     }
     private void esUnaNuevaSalida(Rama_Hoja pRamaA, Rama_Hoja pRamaB){
         for(Nodo<Rama_Hoja> iterador = _salidasDelArbol.getHead(); iterador != null; iterador = iterador.getSiguiente())
             for(Nodo<Rama_Hoja> subiterador = iterador.getDato().getEntradas().getHead(); subiterador != null; subiterador = subiterador.getSiguiente())
                 if(subiterador.getDato() == pRamaB)
                     _salidasDelArbol.insertar(pRamaA);
+    }    
+    
+    public Rama_Hoja getObjetoConXEntradaOSalida(){
+        Rama_Hoja resp = null;
+        
+        return resp;
     }
-    
-    private void insertarPrimerElemento(Rama_Hoja pNewRama){
-        this._primerElemento = pNewRama;
-        this._nElementos++;
-        this._salidasDelArbol.insertar(pNewRama);
-        //System.out.println("Extio un elemento en el arbol");
-    }
-    
-    
     public Rama_Hoja getObjectoNombre(String pNombre){//el criterio es el nombre de cada objeto (String) unico
         Rama_Hoja resp = null;                       //si no encuentra retorna null.
         for(Nodo<Rama_Hoja> iterador = _salidasDelArbol.getHead(); iterador != null; iterador = iterador.getSiguiente()){
@@ -92,10 +99,6 @@ public class Arbol<E> {
     }
     public Lista<Rama_Hoja> getListaSalidas(){
         return this._salidasDelArbol;
-    }
-    
-    public Lista<Rama_Hoja> getListaEntradas(){
-        return this._entradasDelArbol;
     }
     
     public boolean eliminar(String pId){
@@ -127,7 +130,15 @@ public class Arbol<E> {
             System.out.println(iterador.getDato().getIdentificador());
         }
     }
-
     
+    public void printlnEntradas(){
+        for(Nodo<Rama_Hoja> iterador = _entradasDelArbol.getHead(); iterador != null; iterador = iterador.getSiguiente()){
+            System.out.println(iterador.getDato().getIdentificador());
+        }
+    }
+    
+    public Lista<Rama_Hoja> getListaEntradas(){
+        return this._entradasDelArbol;
+    }
     
 }
