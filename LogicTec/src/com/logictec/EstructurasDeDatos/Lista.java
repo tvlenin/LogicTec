@@ -233,6 +233,20 @@ public class Lista<E> {
     public int getTalla(){
         return this.talla;
     } 
+    
+    
+    public Nodo<E> getNodoXpos(int x){
+        Nodo<E> resp = cabeza;
+        for(int i=0 ; i < x ;i++){
+            if(resp != cola)
+                resp = resp.getSiguiente();
+            else{
+                System.out.println("indice fuera de rango");
+                return null;
+            }
+        }
+        return resp;
+    }
     public int getDistancia(Nodo<E> pNodoA, Nodo<E> pNodoB){
         int resp=0;
         Nodo<E> iterador=pNodoA;

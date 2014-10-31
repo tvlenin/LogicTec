@@ -29,7 +29,7 @@ public class Arbol<E>{
                     }
                     else{
                         this.esUnaNuevaSalida(pRamaA, pRamaB);
-                        System.out.println("Probando nueva in con : "+pRamaA.getIdentificador()+"y  "+pRamaB.getIdentificador());
+                       // System.out.println("Probando nueva in con : "+pRamaA.getIdentificador()+"y  "+pRamaB.getIdentificador());
                     }
                     if(_entradasDelArbol.buscar(pRamaA)){
                         _entradasDelArbol.eliminar(pRamaA);
@@ -54,7 +54,7 @@ public class Arbol<E>{
     }
     
     private void esUnaNuevaEntrada(Rama_Hoja pRamaA, Rama_Hoja pRamaB) {
-        System.out.println("testing IN");
+        //System.out.println("testing IN");
         for(Nodo<Rama_Hoja> iterador = _entradasDelArbol.getHead(); iterador != null; iterador = iterador.getSiguiente())
             for(Nodo<Rama_Hoja> subiterador = iterador.getDato().getSalidas().getHead(); subiterador != null; subiterador = subiterador.getSiguiente())
                 if(subiterador.getDato() == pRamaA){

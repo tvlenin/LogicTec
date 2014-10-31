@@ -15,6 +15,13 @@ public class main {
         testCircuit.conectar_A_ArribaDe_B("B1", null);
    */
         Lista<String> lista = new Lista<>();
+        lista.insertar("4");
+        lista.insertar("3");
+        lista.insertar("2");
+        lista.insertar("1");
+        
+
+        
         
         Arbol arbol = new Arbol();
         Rama_Hoja a = new Rama_Hoja("AND", "A", lista , lista);
@@ -27,14 +34,15 @@ public class main {
         arbol.conectar_A_ArribaDe_B(a, b);
         arbol.conectar_A_ArribaDe_B(a, c);
         
-        System.out.println("salidas");
+       /* System.out.println("salidas");
         arbol.printlnSalidas();
         System.out.println("entradas");
         arbol.printlnEntradas();
         arbol.conectar_A_ArribaDe_B(a, d);
         arbol.conectar_A_ArribaDe_B(a, e);
+        */
         
-        
+        Lista<Integer> cva = new Lista<>();
         
     }
     

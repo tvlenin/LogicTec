@@ -8,7 +8,7 @@ public class Rama_Hoja{
     protected int _ValorOutPut; //resultado de todas las entradas
     protected Lista<Rama_Hoja> _listaInPuts;
     protected Lista<Rama_Hoja> _listaOutPuts;
-    protected Lista<String> _IdEntradas;
+    protected Lista<String> _IdEntradasHASCODE;
     protected Lista<String> _IdSalidas;
     protected String _logicaCompuerta; //and, or, nor, not, etc
     
@@ -17,7 +17,7 @@ public class Rama_Hoja{
         this._logicaCompuerta = pLogicaCompuerta;
         this._listaInPuts = new Lista<>();
         this._listaOutPuts = new Lista<>();
-        this._IdEntradas = pNumeroEntradas;
+        this._IdEntradasHASCODE = pNumeroEntradas;
         this._IdSalidas = pNumeroSalidas;
         if(pLogicaCompuerta == "IN")
             this._ValorOutPut = 0;
@@ -84,7 +84,7 @@ public class Rama_Hoja{
     
     public boolean tieneXEntrada(String pData){
         boolean resp = false;
-        for(Nodo<String> iterador = _IdEntradas.getHead(); iterador != null; iterador = iterador.getSiguiente()){
+        for(Nodo<String> iterador = _IdEntradasHASCODE.getHead(); iterador != null; iterador = iterador.getSiguiente()){
             if(iterador.getDato() == pData){
                 resp = true;
                 break;
