@@ -13,6 +13,7 @@ public class Arbol<E>{
         this._primerElemento = null;
         this._entradasDelArbol = new Lista<>();
         this._salidasDelArbol = new Lista<>();
+        
     }
     
     public void conectar_A_ArribaDe_B(Rama_Hoja pRamaA ,Rama_Hoja pRamaB){ //la estructura es semejante a un arbol (se ensancha en la base y disminuye al subir)

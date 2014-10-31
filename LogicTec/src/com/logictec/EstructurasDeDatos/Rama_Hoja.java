@@ -8,17 +8,13 @@ public class Rama_Hoja{
     protected int _ValorOutPut; //resultado de todas las entradas
     protected Lista<Rama_Hoja> _listaInPuts;
     protected Lista<Rama_Hoja> _listaOutPuts;
-    protected Lista<String> _IdEntradasHASCODE;
-    protected Lista<String> _IdSalidas;
     protected String _logicaCompuerta; //and, or, nor, not, etc
     
-    public Rama_Hoja(String pLogicaCompuerta,String pID, Lista<String> pNumeroEntradas , Lista<String> pNumeroSalidas){
+    public Rama_Hoja(String pLogicaCompuerta,String pID,Lista<String> listaHashCode){
         this._nombre = pID;
         this._logicaCompuerta = pLogicaCompuerta;
         this._listaInPuts = new Lista<>();
         this._listaOutPuts = new Lista<>();
-        this._IdEntradasHASCODE = pNumeroEntradas;
-        this._IdSalidas = pNumeroSalidas;
         if(pLogicaCompuerta == "IN")
             this._ValorOutPut = 0;
         else
@@ -82,27 +78,6 @@ public class Rama_Hoja{
                 System.out.println(iterador.getDato().getIdentificador());
     }
     
-    public boolean tieneXEntrada(String pData){
-        boolean resp = false;
-        for(Nodo<String> iterador = _IdEntradasHASCODE.getHead(); iterador != null; iterador = iterador.getSiguiente()){
-            if(iterador.getDato() == pData){
-                resp = true;
-                break;
-            }
-        }
-        return resp;
-    }
-    
-    public boolean tieneXSalida(String pData){
-        boolean resp = false;
-        for(Nodo<String> iterador = _IdSalidas.getHead(); iterador != null; iterador = iterador.getSiguiente()){
-            if(iterador.getDato() == pData){
-                resp = true;
-                break;
-            }
-        }
-        return resp;
-    }
     public void printInPuts(){// Imprimir todos los nombres de los Inputs
         if(_listaInPuts == null)
             System.out.println("No tiene Inputs");

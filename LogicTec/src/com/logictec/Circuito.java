@@ -10,14 +10,16 @@ public class Circuito {
     
     private Lista<Rama_Hoja> _compuertasDesconectadas; 
     private Arbol _circuito;
+    private Lista<String> _listaHashcode;
     
     public Circuito(){
         this._compuertasDesconectadas = new Lista<>();
         this._circuito = new Arbol();   
+        this._listaHashcode = new Lista<>();
     }
     
-    public void crearNodo(String pID,String logica, Lista<String> pEntradas, Lista<String> pSalidas){
-        Rama_Hoja nuevaRama = new Rama_Hoja(logica, pID, pEntradas, pSalidas);
+    public void crearNodo(String pID,String logica, Lista<String> listaHashCodes){
+        Rama_Hoja nuevaRama = new Rama_Hoja(logica, pID, listaHashCodes);
         _compuertasDesconectadas.insertar(nuevaRama);
     }
     

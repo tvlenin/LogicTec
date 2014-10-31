@@ -3,6 +3,7 @@ package com.LogicTec.EstructurasDeDatos;
 
 public class Nodo<E>{ //<E extends Comparable> implements Comparable<Nodo<E>>
     public E dato;
+    private String _indice;
     public Nodo<E> siguiente;
     public Nodo<E> previo;
     
@@ -14,6 +15,12 @@ public class Nodo<E>{ //<E extends Comparable> implements Comparable<Nodo<E>>
         this.dato = pDato;
         this.siguiente = pSiguiente;
         this.previo = pPrevio;
+    }
+    public Nodo(E dato, String Indice){
+        this._indice = Indice;
+        this.dato = dato;
+        this.previo = null;
+        this.siguiente = null;
     }
     
     public void setData(E pData){
@@ -51,6 +58,10 @@ public class Nodo<E>{ //<E extends Comparable> implements Comparable<Nodo<E>>
         if(siguiente != null)
             resp = true;
         return resp;
+    }
+    
+    public String getIndex(){
+        return _indice;
     }
     
 }

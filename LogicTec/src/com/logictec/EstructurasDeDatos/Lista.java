@@ -11,6 +11,21 @@ public class Lista<E> {
         cola = null;
         talla = 0;
     }
+    public Lista(Lista<String> pHashCodes){
+        if(pHashCodes.getTalla() == 0)
+            return;
+        Nodo nuevoA = new Nodo(null, pHashCodes.getHead().getDato());
+        cabeza = nuevoA;
+        cola = nuevoA;
+        talla = 0;
+        for(Nodo<String> i = pHashCodes.getHead().getSiguiente(); i!= null; i = i.getSiguiente()){
+            Nodo nuevoB = new Nodo(null, i.getDato());
+            nuevoA.siguiente = nuevoB;
+            nuevoB.previo = nuevoA;
+            talla++;
+            nuevoA = nuevoA.getSiguiente();
+        }
+    }
     
     public void insertar(E pData){
         Nodo<E> nuevo = new Nodo<>(pData);        
@@ -269,6 +284,28 @@ public class Lista<E> {
         cola.siguiente = pLista.getHead();
         pLista.getHead().previo = cola;
         cola = pLista.getTail();
+    }
+    
+    public void insertarEnIndex(String pIndex, E pData){
+        for(Nodo<E> i = cabeza; i != null; i = i.getSiguiente())
+            if(pIndex == i.getIndex())
+                i.setData(pData);
+    }
+    public E getIndice(String pIndex){
+        E resp = null;
+        for (Nodo<E> i = cabeza; i != null; i = i.getSiguiente() )
+            if(i.getIndex() == pIndex)
+                resp = i.getDato();
+        return resp;
+    }
+    
+    public E getDataIndex(String pIndex){
+        E resp = null;
+        for(Nodo<E> i = cabeza; i != null; i=i.getSiguiente()){
+            if(i.getIndex() == pIndex)
+                resp = i.getDato();
+        }
+        return resp;
     }
 }
       
