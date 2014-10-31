@@ -281,9 +281,16 @@ public class Lista<E> {
     }
     
     public void concatenar(Lista<E> pLista){
+        if(talla == 0){
+            cabeza = pLista.getHead();
+            talla = pLista.getTalla();
+            cola = pLista.getTail();
+            return;
+        }
         cola.siguiente = pLista.getHead();
         pLista.getHead().previo = cola;
         cola = pLista.getTail();
+        talla = talla + pLista.getTalla();
     }
     
     public void insertarEnIndex(String pIndex, E pData){

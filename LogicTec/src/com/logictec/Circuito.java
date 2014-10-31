@@ -10,20 +10,51 @@ public class Circuito {
     
     private Lista<Rama_Hoja> _compuertasDesconectadas; 
     private Arbol _circuito;
-    private Lista<String> _listaHashcode;
+    private Lista<String> _ID_HASHCODE_IO;
     
     public Circuito(){
         this._compuertasDesconectadas = new Lista<>();
         this._circuito = new Arbol();   
-        this._listaHashcode = new Lista<>();
+        this._ID_HASHCODE_IO = new Lista<>();
     }
     
     public void crearNodo(String pID,String logica, Lista<String> listaHashCodes){
         Rama_Hoja nuevaRama = new Rama_Hoja(logica, pID, listaHashCodes);
         _compuertasDesconectadas.insertar(nuevaRama);
+        _ID_HASHCODE_IO.concatenar(listaHashCodes);
     }
     
-    public void conectar_A_ArribaDe_B(String pA, String pB){
+    public void conectar(String AHC, String BHC){ //hashcode B y B
+        String Acode= null;
+        String Bcode= null;
+        for (Nodo<String> i = _ID_HASHCODE_IO.getHead(); i != null; i = i.getSiguiente()){
+            if(i.getDato().contains(AHC)){
+                Acode = i.getDato();
+            }
+            if(i.getDato().contains(BHC)){
+                Bcode = i.getDato();
+            }
+        }
+        System.out.println(Acode+" , conectando , "+Bcode);
+        Rama_Hoja NODOA =_circuito.getObjectoNombre(Acode.split("_")[0]);
+        if(NODOA == null){
+            for(Nodo<Rama_Hoja> i = _compuertasDesconectadas.getHead(); i != null; i= i.getSiguiente()){
+                if (Acode.contains(i.getDato().getIdentificador())){
+                    NODOA = i.getDato();
+                }
+            }
+        }
+        Rama_Hoja NODOB =_circuito.getObjectoNombre(Bcode.split("_")[0]);
+        if(NODOB == null){
+            for(Nodo<Rama_Hoja> i = _compuertasDesconectadas.getHead(); i != null; i= i.getSiguiente())
+                if (Bcode.contains(i.getDato().getIdentificador())){
+                    NODOB = i.getDato();
+                }
+        }
+        _circuito.conectarA_B(NODOA, AHC , NODOB, BHC);
+    }
+    
+    /*public void conectar_A_ArribaDe_B(String pA, String pB){
         Rama_Hoja A = _circuito.getObjectoNombre(pA);
         Rama_Hoja B = _circuito.getObjectoNombre(pB);
         if( A == null)
@@ -43,6 +74,7 @@ public class Circuito {
         System.out.println(_circuito.getListaEntradas().getHead());
         System.out.println(_circuito.getListaSalidas().getHead());
     }
+    */
     
     private Rama_Hoja buscarSacarEntreDesconectado(String pID){
         Rama_Hoja resp = null;
